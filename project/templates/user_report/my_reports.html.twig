@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Moje zgłoszenia{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center page-header">
+                    <div>
+                        <h1 class="text-primary mb-0">
+                            <i class="fas fa-clipboard-list me-2"></i>Moje zgłoszenia
+                        </h1>
+                        <p class="text-muted">Lista zgłoszeń wysłanych przez Ciebie</p>
+                    </div>
+                    <a href="{{ path('app_user_report_new_public') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i> Zgłoś nowe zagrożenie
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0">Lista moich zgłoszeń</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-dark">
+                                <tr>
+                                    <th>Data zgłoszenia</th>
+                                    <th>Lokalizacja</th>
+                                    <th>Typ</th>
+                                    <th>Opis</th>
+                                    <th>Status</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user_report in user_reports %}
+                                    <tr>
+                                        <td>
+                                            <i class="far fa-calendar-alt me-1 text-muted"></i>
+                                            {{ user_report.createdAt ? user_report.createdAt|date('d.m.Y') : '' }}
+                                            <br>
+                                            <small class="text-muted">
+                                                <i class="far fa-clock me-1"></i>
+                                                {{ user_report.createdAt ? user_report.createdAt|date('H:i') : '' }}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <i class="fas fa-map-marker-alt me-1 text-danger"></i>
+                                            {{ user_report.location }}
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary">{{ user_report.type }}</span>
+                                        </td>
+                                        <td>
+                                            {{ user_report.description|length > 50 ? user_report.description|slice(0, 50) ~ '...' : user_report.description }}
+                                        </td>
+                                        <td>
+                                            {% set statusClass = 'badge bg-secondary' %}
+                                            {% set statusText = 'Oczekujące' %}
+
+                                            {% if user_report.status == 'PENDING' %}
+                                                {% set statusClass = 'badge bg-secondary' %}
+                                                {% set statusText = 'Oczekujące' %}
+                                            {% elseif user_report.status == 'IN_REVIEW' %}
+                                                {% set statusClass = 'badge bg-primary' %}
+                                                {% set statusText = 'W trakcie weryfikacji' %}
+                                            {% elseif user_report.status == 'ESCALATED' %}
+                                                {% set statusClass = 'badge bg-info' %}
+                                                {% set statusText = 'Przekazane do służb' %}
+                                            {% elseif user_report.status == 'RESOLVED' %}
+                                                {% set statusClass = 'badge bg-success' %}
+                                                {% set statusText = 'Obsłużone' %}
+                                            {% elseif user_report.status == 'REJECTED' %}
+                                                {% set statusClass = 'badge bg-danger' %}
+                                                {% set statusText = 'Odrzucone' %}
+                                            {% elseif user_report.status == 'CANCELLED' %}
+                                                {% set statusClass = 'badge bg-warning text-dark' %}
+                                                {% set statusText = 'Anulowane' %}
+                                            {% endif %}
+
+                                            <span class="{{ statusClass }}">
+                                                {{ statusText }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" class="text-center py-5">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <i class="fas fa-clipboard-list text-muted mb-3" style="font-size: 3rem;"></i>
+                                                <h5 class="text-muted">Brak zgłoszeń</h5>
+                                                <p class="text-muted">Nie wysłałeś jeszcze żadnych zgłoszeń</p>
+                                                <a href="{{ path('app_user_report_new_public') }}" class="btn btn-primary mt-2">
+                                                    <i class="fas fa-plus me-1"></i> Zgłoś zagrożenie
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <div>
+                            <small class="text-muted">Wyświetlanie {{ user_reports|length }} zgłoszeń</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <a href="{{ path('app_home') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-1"></i> Powrót do strony głównej
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

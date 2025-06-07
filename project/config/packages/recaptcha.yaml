@@ -1,0 +1,5 @@
+# ReCaptcha Configuration
+parameters:
+    # These are placeholder values that will be replaced with real API keys later
+    recaptcha_site_key: 'placeholder_key'
+    recaptcha_secret_key: 'placeholder_key'

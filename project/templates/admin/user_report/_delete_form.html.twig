@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_user_report_delete', {'id': user_report.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć to zgłoszenie? Ta operacja jest nieodwracalna.');" class="d-inline">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user_report.id) }}">
+    <button class="btn btn-danger">
+        <i class="fas fa-trash-alt me-1"></i> Usuń
+    </button>
+</form>

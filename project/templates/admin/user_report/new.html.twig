@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New UserReport{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h1 class="mb-0">Create new UserReport</h1>
+            </div>
+            <div class="card-body">
+                {{ include('admin/user_report/_form.html.twig') }}
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a class="btn btn-secondary" href="{{ path('app_user_report_index') }}">Back to List</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

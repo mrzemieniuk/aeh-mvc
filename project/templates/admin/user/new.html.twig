@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nowy Użytkownik{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center page-header">
+                    <div>
+                        <h1 class="text-primary mb-0">
+                            <i class="fas fa-user-plus me-2"></i>Nowy Użytkownik
+                        </h1>
+                        <p class="text-muted">Utwórz nowe konto użytkownika w systemie</p>
+                    </div>
+                    <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Powrót do listy
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {{ include('admin/user/_form.html.twig', {'form_label': 'Dane nowego użytkownika'}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

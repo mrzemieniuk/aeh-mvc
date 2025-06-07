@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_emergency_alert_delete', {'id': emergency_alert.id}) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć ten alert? Ta operacja jest nieodwracalna.');" class="d-inline">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emergency_alert.id) }}">
+    <button class="btn btn-danger">
+        <i class="fas fa-trash-alt me-1"></i> Usuń
+    </button>
+</form>

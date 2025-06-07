@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Szczegóły Użytkownika{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center page-header">
+                    <div>
+                        <h1 class="text-primary mb-0">
+                            <i class="fas fa-user me-2"></i>Szczegóły Użytkownika
+                        </h1>
+                        <p class="text-muted">Przeglądaj informacje o użytkowniku</p>
+                    </div>
+                    <div>
+                        <a href="{{ path('app_user_index') }}" class="btn btn-outline-secondary me-2">
+                            <i class="fas fa-arrow-left me-1"></i> Powrót do listy
+                        </a>
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning">
+                            <i class="fas fa-edit me-1"></i> Edytuj
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Informacje o użytkowniku #{{ user.id }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">Imię:</label>
+                                    <p>{{ user.name }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">Nazwisko:</label>
+                                    <p>{{ user.surname }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">Email:</label>
+                                    <p>{{ user.email }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">Telefon:</label>
+                                    <p>{{ user.phone }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label class="form-label fw-bold">Role:</label>
+                                    <div>
+                                        {% for role in user.roles %}
+                                            {% set roleClass = 'bg-secondary' %}
+                                            {% if role == 'ROLE_ADMIN' %}
+                                                {% set roleClass = 'bg-danger' %}
+                                            {% elseif role == 'ROLE_USER' %}
+                                                {% set roleClass = 'bg-primary' %}
+                                            {% endif %}
+                                            <span class="badge {{ roleClass }} me-1">{{ role }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                        <small class="text-muted">ID: {{ user.id }}</small>
+                        {{ include('admin/user/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
